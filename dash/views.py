@@ -10,6 +10,8 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+
+@login_required()
 def home(request):
     return render(request, 'index.html')
 

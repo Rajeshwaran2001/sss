@@ -1,10 +1,11 @@
-from django.conf.global_settings import LOGIN_REDIRECT_URL
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.shortcuts import render
 from dash.models import Admin
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+
+from sss.settings import LOGIN_REDIRECT_URL
 
 
 def logout_user(request):
@@ -14,6 +15,7 @@ def logout_user(request):
 
 def login_user(request):
     if request.user.is_authenticated:
+        print(request.user.is_authenticated)
         return redirect(LOGIN_REDIRECT_URL)
 
     if request.method == 'POST':
