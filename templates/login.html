@@ -71,7 +71,7 @@
     $('form').submit(function (event) {
         event.preventDefault();
         $.ajax({
-            url: '{% url 'dashboard:login' %}',
+            url: '{% url 'Login' %}',
             type: 'POST',
             data: $('form').serialize(),
             success: function (response) {
@@ -85,7 +85,7 @@
                         timer: 1000
                     }).then(function () {
                         // Redirect to the afterlogin page
-                        window.location.href = '{% url "dashboard:home" %}';
+                        window.location.href = '{% url "afterlogin" %}';
                     });
                 } else {
                     // Display error message using SweetAlert

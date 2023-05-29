@@ -1,4 +1,6 @@
-from django.conf.global_settings import LOGIN_REDIRECT_URL
+from django.contrib.auth.models import Group
+
+from .forms import AdminBaseForm, AdminUserForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -29,26 +31,21 @@ def change_password(request):
     return render(request, 'change_password.html', context)
 
 
-def logout_user(request):
-    logout(request)
-    return redirect('Login')
-
-
-def login_user(request):
-    if request.user.is_authenticated:
-        return redirect(LOGIN_REDIRECT_URL)
-
+def Admin_signup_view(request):
+    userForm = AdminBaseForm()
+    AdminUser = AdminUserForm()
+    mydict = {'userForm': userForm, 'AdminUser': AdminUser}
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            # Return a JSON response with a success message
-            return JsonResponse({'success': True, 'message': 'Logged in successfully'})
-        else:
-            # Return a JSON response with an error message
-            return JsonResponse({'success': False, 'message': 'Username or password is incorrect'})
-
-    return render(request, 'login.html')
+        userForm = AdminBaseForm(request.POST)
+        AdminUser = AdminUserForm(request.POST)
+        if userForm.is_valid() and AdminUser.is_valid():
+            user = userForm.save()
+            user.set_password(user.password)
+            user.save()
+            Admin_s = AdminUser.save(commit=False)
+            Admin_s.user = user
+            Admin_s.save()
+            my_group = Group.objects.get_or_create(name='Admins')
+            my_group[0].user_set.add(user)
+        return redirect('Login')
+    return render(request, 'signup/signup.html', context=mydict)
