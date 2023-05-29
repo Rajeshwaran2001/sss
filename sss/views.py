@@ -15,7 +15,6 @@ def logout_user(request):
 
 def login_user(request):
     if request.user.is_authenticated:
-        print(request.user.is_authenticated)
         return redirect(LOGIN_REDIRECT_URL)
 
     if request.method == 'POST':
