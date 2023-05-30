@@ -70,9 +70,12 @@ class device_list(models.Model):
         return self.user
 
     def save(self, *args, **kwargs):
+        if self.branch and self.system_purchased_year and self.sys_name:
+            self.barcode_id = f"{self.branch}{self.system_purchased_year.year}{self.sys_name}"
+        super().save(*args, **kwargs)
         EAN = barcode.get_barcode_class('code39')
-        ean = EAN(f'{self.branch}{self.system_purchased_year.year}{self.sys_name}', writer=ImageWriter())
+        ean = EAN(self.barcode_id, writer=ImageWriter())
         buffer = BytesIO()
         ean.write(buffer)
-        self.barcode.save(f'{self.pk}.png', File(buffer), save=False)
+        self.barcode.save(f'{self.barcode_id}.png', File(buffer), save=False)
         return super().save(*args, **kwargs)
