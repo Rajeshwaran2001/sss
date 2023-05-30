@@ -1,7 +1,6 @@
 from django.db import models
-from barcode import generate
+import barcode
 from barcode.writer import ImageWriter
-from django.core.files.base import ContentFile
 from io import BytesIO
 from django.core.files import File
 
@@ -49,6 +48,7 @@ class printer(models.Model):
 
 class device_list(models.Model):
     barcode = models.ImageField(upload_to='barcodes/', null=True, blank=True)
+    barcode_id = models.CharField(max_length=500, blank=True, null=True)
     branch = models.ForeignKey(branch, on_delete=models.SET_NULL, blank=False, null=True)
     user = models.CharField(max_length=120, blank=True, null=True)
     sys_name = models.CharField(max_length=120, blank=True, null=True)
@@ -66,23 +66,13 @@ class device_list(models.Model):
     printer_purchased_from = models.CharField(max_length=120, blank=True, null=True)
     printer_year = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return self.user
+
     def save(self, *args, **kwargs):
-        if not self.id and not self.barcode:
-            # Generate barcode image
-            barcode_value = str(self.id)
-            barcode_image = generate('code128', barcode_value, writer=ImageWriter())
-
-            # Create a BytesIO object to store the image
-            buffer = BytesIO()
-            barcode_image.save(buffer, format='PNG')
-
-            # Set the file name
-            file_name = f'barcode_{self.id}.png'
-
-            # Create a ContentFile from the buffer's value
-            barcode_content = ContentFile(buffer.getvalue())
-
-            # Assign the ContentFile to the self.barcode attribute
-            self.barcode.save(file_name, barcode_content)
-
-        super(device_list, self).save(*args, **kwargs)
+        EAN = barcode.get_barcode_class('code39')
+        ean = EAN(f'{self.branch}{self.system_purchased_year.year}{self.sys_name}', writer=ImageWriter())
+        buffer = BytesIO()
+        ean.write(buffer)
+        self.barcode.save(f'{self.pk}.png', File(buffer), save=False)
+        return super().save(*args, **kwargs)
