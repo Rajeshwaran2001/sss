@@ -2,7 +2,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block css %}
-    <script src="{% static 'js/plugins/sweetalert2@11.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/plugins/flatpickr.min.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -83,7 +83,8 @@
             <div class="col-lg-12 col-md-10 mb-md-0 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
-                        <h5 class="text-center">Asset List &nbsp; &nbsp; &nbsp; <span data-bs-toggle="tooltip" data-bs-original-title="Add New Asset"><span
+                        <h5 class="text-center">Asset List &nbsp; &nbsp; &nbsp; <span data-bs-toggle="tooltip"
+                                                                                      data-bs-original-title="Add New Asset"><span
                                 class="fa-solid fa-user-plus text-success" data-bs-toggle="modal"
                                 data-bs-target="#modal-form"></span></span></h5>
                     </div>
@@ -94,6 +95,7 @@
                                 <tr>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">ID</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">User</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">Asset Id</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">Sys name</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">warranty</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">manufacture</th>
@@ -108,10 +110,10 @@
                                             <span class="text-xs text-dark font-weight-bold">{{ forloop.counter }}</span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <a class="font-weight-bold" href="#"
-                                               onclick="showLoading(event, '')">
-                                                <span class="text-xs text-dark font-weight-bold"> {{ a.user }} </span>
-                                            </a>
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.user }} </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold">{{ a.barcode_id }}</span>
                                         </td>
 
                                         <td class="align-middle text-center text-sm">
@@ -182,30 +184,78 @@
                                 <form role="form" id="form" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">First Name</label>
-                                        {% render_field form2.first_name class="form-control" %}
+                                        <label class="form-label">Branch</label>
+                                        {% render_field form.branch class="form-control" %}
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Last name</label>
-                                        {% render_field form2.last_name class="form-control" %}
+                                        <label class="form-label">User</label>
+                                        {% render_field form.user class="form-control" %}
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">username</label>
-                                        {% render_field form2.username class="form-control" %}
+                                        <label class="form-label">Sys Name</label>
+                                        {% render_field form.sys_name class="form-control" %}
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Password</label>
-                                        {% render_field form2.password class="form-control" %}
+                                        <label class="form-label">Warranty</label>
+                                        {% render_field form.warranty class="form-control" %}
                                     </div>
 
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Address</label>
-                                        {% render_field form1.address class="form-control" %}
+                                        <label class="form-label">Sys Purchased From</label>
+                                        {% render_field form.system_purchased_from class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Bill No</label>
+                                        {% render_field form.bill_no class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Purchased Date</label>
+                                        {% render_field form.system_purchased_year class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Manufacture</label>
+                                        {% render_field form.manufacture class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Processor</label>
+                                        {% render_field form.processor class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Ram</label>
+                                        {% render_field form.ram class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Hard Disk Type</label>
+                                        {% render_field form.hard_disk_type class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Hard Disk Size</label>
+                                        {% render_field form.hard_disk_size class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Monitor</label>
+                                        {% render_field form.monitor class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">IP Address</label>
+                                        {% render_field form.ip_address class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Printer</label>
+                                        {% render_field form.printer class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Printer Purchased From</label>
+                                        {% render_field form.printer_purchased_from class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Printer Purchased Date</label>
+                                        {% render_field form.printer_year class="form-control" %}
                                     </div>
 
                                     <div class="text-center">
                                         <button type="submit"
-                                                class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Add User
+                                                class="btn btn-lg bg-gradient-info btn-lg w-100 mt-4 mb-0">Add New Asset
                                         </button>
                                     </div>
                                 </form>
@@ -219,6 +269,7 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script src="{% static 'js/plugins/sweetalert2@11.js' %}"></script>
     <script>
         function showLoading(event, url) {
             // Prevent the default behavior of the hyperlink
@@ -232,6 +283,55 @@
                 window.location.href = url;
             }, 1000);
         }
+    </script>
+    <script>
+        $('#form').submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '{% url "dashboard:asset" %}',
+                type: 'POST',
+                data: $('#form').serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        // Display success message using SweetAlert
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(function () {
+                            // Redirect to the afterlogin page
+                            window.location.href = '{% url "dashboard:asset" %}';
+                        });
+                    } else {
+                        // Display error message using SweetAlert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    // Display error message using SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred. Please try again later.',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                },
+                complete: function () {
+                    // Hide the loading image
+                    $('#loading').hide();
+                }
+            });
+        });
     </script>
 {% endblock %}
 

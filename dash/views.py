@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from utility.models import device_list
-from .forms import AdminBaseForm, AdminUserForm
+from .forms import AdminBaseForm, AdminUserForm, asset_listForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -18,9 +18,17 @@ def home(request):
 
 @login_required()
 def asset(request):
-    list = device_list.objects.all()
+    li = device_list.objects.all()
+    form = asset_listForm()
+    if request.method == 'POST':
+        data = asset_listForm(request.POST)
+        if data.is_valid():
+            data1 = data.save()
+            data1.save()
+            return JsonResponse({'success': True, 'message': 'New Asset Added successfully'})
     context = {
-        'list': list,
+        'list': li,
+        'form': form
     }
     return render(request, 'dashboard/asset.html', context)
 
