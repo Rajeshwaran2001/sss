@@ -83,6 +83,8 @@ class device_list(models.Model):
         super().save(*args, **kwargs)
         if self.branch and self.system_purchased_year and self.sys_name:
             self.barcode_id = f"{self.branch} {self.system_purchased_year.year} {self.sys_name} {self.asset_id}"
+            if any(char.isalpha() for char in self.barcode_id):
+                self.barcode_id = self.barcode_id.upper()
 
         if self.branch and self.system_purchased_year and self.sys_name:
             barcode_data = f"{self.barcode_id}"
