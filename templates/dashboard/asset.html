@@ -270,6 +270,7 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/plugins/sweetalert2@11.js' %}"></script>
+    <script src="{% static 'js/plugins/flatpickr.js' %}"></script>
     <script>
         function showLoading(event, url) {
             // Prevent the default behavior of the hyperlink
@@ -283,6 +284,10 @@
                 window.location.href = url;
             }, 1000);
         }
+
+        flatpickr("#datepicker", {
+            dateFormat: "Y-m-d",
+        });
     </script>
     <script>
         $('#form').submit(function (event) {
