@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group
-
+from utility.models import device_list
 from .forms import AdminBaseForm, AdminUserForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout, authenticate, login
@@ -14,6 +14,15 @@ from django.shortcuts import render, redirect
 @login_required()
 def home(request):
     return render(request, 'index.html')
+
+
+@login_required()
+def asset(request):
+    list = device_list.objects.all()
+    context = {
+        'list': list,
+    }
+    return render(request, 'dashboard/asset.html', context)
 
 
 @login_required()

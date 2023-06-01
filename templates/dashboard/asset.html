@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+         data-scroll="true">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <img src="" class="navbar-brand-img h-100" width="150" alt="main_logo">
+
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+                <ul class="navbar-nav  justify-content-end">
+                    <li class="nav-item d-flex align-items-center text-dark">
+                        <span class="d-sm-inline d-none text-xl"><span
+                                class="text-success">Welcome!</span>&nbsp;{{ user.username }}</span>
+                    </li>
+                    &nbsp;&nbsp;<li class="nav-item dropdown pe-2 d-flex align-items-center">
+                    <a href="javascript:" class="nav-link text-body p-0" id="dropdownMenuButton"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-cog cursor-pointer"></i>
+                    </a>
+                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
+                        aria-labelledby="dropdownMenuButton">
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="#"
+                               onclick="showLoading(event, '{% url 'dashboard:change' %}')">
+                                <div class="d-flex py-1">
+                                    <div class="my-auto">
+                                        <i class="fa fa-key" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="text-sm font-weight-normal mb-1">
+                                            <span class="font-weight-bold text-warning">Change Password</span>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="#"
+                               onclick="showLoading(event, '{% url 'Logout' %}')">
+                                <div class="d-flex py-1">
+                                    <div class="my-auto">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="text-sm font-weight-normal mb-1">
+                                            <span class="font-weight-bold text-danger">LogOut</span>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+
+        <div class="row mt-4">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mb-md-0 mb-4">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h5 class="text-center">Asset List &nbsp; &nbsp; &nbsp; <span data-bs-toggle="tooltip" data-bs-original-title="Add New Asset"><span
+                                class="fa-solid fa-user-plus text-success" data-bs-toggle="modal"
+                                data-bs-target="#modal-form"></span></span></h5>
+                    </div>
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0" style="max-height: 600px; overflow-y: auto;">
+                            <table class="table align-items-center text-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">ID</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">User</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Sys name</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">warranty</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">manufacture</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">ip address</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">printer</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for a in list %}
+                                    <tr>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold">{{ forloop.counter }}</span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <a class="font-weight-bold" href="#"
+                                               onclick="showLoading(event, '')">
+                                                <span class="text-xs text-dark font-weight-bold"> {{ a.user }} </span>
+                                            </a>
+                                        </td>
+
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.sys_name }} </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.warranty }} </span>
+                                        </td>
+
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.manufacture }} </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.ip_address }} </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.printer }} </span>
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"></div>
+    <!--<div class="card card-plain">
+        <div class="card-header">
+            <h4 class="font-weight-bolder">Sign Up</h4>
+            <p class="mb-0">Enter your email and password to register</p>
+        </div>
+    </div>
+</div>-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn bg-gradient-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <div class="card card-plain">
+                        <div class="card-header pb-0 text-left">
+                            <div class="card-body">
+                                <form role="form" id="form" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">First Name</label>
+                                        {% render_field form2.first_name class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Last name</label>
+                                        {% render_field form2.last_name class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">username</label>
+                                        {% render_field form2.username class="form-control" %}
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Password</label>
+                                        {% render_field form2.password class="form-control" %}
+                                    </div>
+
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label class="form-label">Address</label>
+                                        {% render_field form1.address class="form-control" %}
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit"
+                                                class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Add User
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        function showLoading(event, url) {
+            // Prevent the default behavior of the hyperlink
+            event.preventDefault();
+
+            // Display the loading animation
+            document.getElementById("loading").style.display = "block";
+
+            // Redirect to the URL after a 1-second delay
+            setTimeout(function () {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
+{% endblock %}
+
