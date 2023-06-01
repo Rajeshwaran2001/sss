@@ -84,12 +84,14 @@ class device_list(models.Model):
         if self.branch and self.system_purchased_year and self.sys_name:
             self.barcode_id = f"{self.branch} {self.system_purchased_year.year} {self.sys_name} {self.asset_id}"
         super().save(*args, **kwargs)
-        EAN = barcode.get_barcode_class('code39')
-        ean = EAN(f"{self.branch} {self.system_purchased_year.year} {self.sys_name} {self.asset_id}",
-                  writer=ImageWriter())
-        buffer = BytesIO()
-        ean.write(buffer)
-        self.barcode.save(f'{self.barcode_id}.png', File(buffer), save=False)
+
+        if self.branch and self.system_purchased_year and self.sys_name:
+            barcode_data = f"{self.branch} {self.system_purchased_year.year} {self.sys_name} {self.asset_id}"
+            EAN = barcode.get_barcode_class('code39')
+            ean = EAN(barcode_data, writer=ImageWriter())
+            buffer = BytesIO()
+            ean.write(buffer)
+            self.barcode.save(f'{self.barcode_id}.png', File(buffer), save=False)
         return super().save(*args, **kwargs)
 
     def generate_random_number(self):
