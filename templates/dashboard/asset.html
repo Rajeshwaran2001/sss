@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
+{% block css %}
+    <script src="{% static 'js/plugins/sweetalert2@11.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <!-- Navbar -->
