@@ -3,6 +3,7 @@ from .models import Admin
 from django.contrib.auth.models import User
 from utility.models import device_list
 from django.forms.widgets import DateInput
+from company.models import service
 
 
 class AdminBaseForm(forms.ModelForm):
@@ -43,3 +44,11 @@ class asset_editForm(forms.ModelForm):
             'system_purchased_year': DateInput(attrs={'class': 'form-control', 'id': 'datepicker'}),
             'printer_year': DateInput(attrs={'class': 'form-control', 'id': 'datepicker'}),
         }
+
+
+class service_Form(forms.ModelForm):
+    resolution = forms.CharField(widget=forms.Textarea(attrs={'maxlength': 1000, 'rows': 3}))
+
+    class Meta:
+        model = service
+        fields = '__all__'

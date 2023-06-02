@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from utility.models import device_list
-from .forms import AdminBaseForm, AdminUserForm, asset_listForm, asset_editForm
+from .forms import AdminBaseForm, AdminUserForm, asset_listForm, asset_editForm, service_Form
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -19,6 +19,19 @@ def home(request):
         'service': ser
     }
     return render(request, 'index.html', context)
+
+
+@login_required()
+def edit_service(request, pk):
+    ser = get_object_or_404(service, pk=pk)
+    if request.method == 'POST':
+        form = service_Form(request.POST, instance=ser)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:home')
+    else:
+        form = service_Form(instance=ser)
+    return render(request, 'dashboard/update.html', {'form': form, 'ser': ser})
 
 
 @login_required()
