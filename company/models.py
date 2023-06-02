@@ -24,7 +24,7 @@ class service(models.Model):
     user = models.ForeignKey(branch_user, on_delete=models.SET_NULL, blank=False, null=True)
     issue = models.ForeignKey(issue_list, on_delete=models.SET_NULL, blank=False, null=True)
     pc = models.ForeignKey(device_list, on_delete=models.SET_NULL, blank=False, null=True)
-    status = models.ForeignKey(status_list, on_delete=models.SET_NULL, blank=False, null=True)
+    status = models.BooleanField(default=False)
     resolution = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):

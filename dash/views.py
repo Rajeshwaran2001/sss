@@ -7,13 +7,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from company.models import service
 
 
 # Create your views here.
 
 @login_required()
 def home(request):
-    return render(request, 'index.html')
+    ser = service.objects.all().filter(status=False)
+    context = {
+        'service': ser
+    }
+    return render(request, 'index.html', context)
 
 
 @login_required()
