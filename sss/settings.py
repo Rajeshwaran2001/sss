@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'company.apps.CompanyConfig',
     'dash.apps.DashConfig',
     'utility.apps.UtilityConfig',
+    'user.apps.UserConfig',
     'widget_tweaks',
 ]
 
