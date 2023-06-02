@@ -9,4 +9,5 @@ urlpatterns = [
     path('signup', views.Admin_signup_view, name='signup'),
     path('asset/', views.asset, name='asset'),
     path('edit/<int:pk>', views.edit_asset, name="edit_asset"),
+    path('delete/<int:pk>', views.delete_asset, name="delete_asset"),
 ]

@@ -45,6 +45,13 @@ def edit_asset(request, pk):
         form = asset_editForm(instance=assets)
     return render(request, 'dashboard/edit_asset.html', {'form': form, 'assets': assets})
 
+
+@login_required()
+def delete_asset(request, pk):
+    assets = device_list.objects.get(pk=pk)
+    assets.delete()
+    return redirect('dashboard:asset')
+
 @login_required()
 def change_password(request):
     if request.method == 'POST':
