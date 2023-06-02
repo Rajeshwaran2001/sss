@@ -1,12 +1,12 @@
 from django.contrib.auth.models import Group
 from utility.models import device_list
-from .forms import AdminBaseForm, AdminUserForm, asset_listForm
+from .forms import AdminBaseForm, AdminUserForm, asset_listForm, asset_editForm
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash, logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 # Create your views here.
@@ -32,6 +32,18 @@ def asset(request):
     }
     return render(request, 'dashboard/asset.html', context)
 
+
+@login_required()
+def edit_asset(request, pk):
+    assets = get_object_or_404(device_list, pk=pk)
+    if request.method == 'POST':
+        form = asset_editForm(request.POST, instance=assets)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard:asset')
+    else:
+        form = asset_editForm(instance=assets)
+    return render(request, 'dashboard/edit_asset.html', {'form': form, 'assets': assets})
 
 @login_required()
 def change_password(request):

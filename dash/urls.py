@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('change_password', views.change_password, name='change'),
     path('signup', views.Admin_signup_view, name='signup'),
-    path('asset/', views.asset, name='asset')
+    path('asset/', views.asset, name='asset'),
+    path('edit/<int:pk>', views.edit_asset, name="edit_asset"),
 ]

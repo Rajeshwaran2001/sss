@@ -101,6 +101,7 @@
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">manufacture</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">ip address</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">printer</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -131,6 +132,20 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-xs text-dark font-weight-bold"> {{ a.printer }} </span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <a href="#"
+                                               onclick="showLoading(event, '{% url 'dashboard:edit_asset' a.id %}')"
+                                               class="text-dark font-weight-bold text-xs"
+                                               data-toggle="tooltip" data-original-title="Edit Ad">
+                                                <i class="material-icons text-info text-gradient">edit</i>
+                                            </a>&nbsp;&nbsp;
+                                            <a href="#"
+                                               onclick="showLoading(event, '{% url 'dashboard:edit_asset' a.id %}')"
+                                               class="text-dark font-weight-bold text-xs"
+                                               data-toggle="tooltip" data-original-title="Delete franchise user">
+                                                <i class="material-icons text-danger text-gradient">delete</i>
+                                            </a>
                                         </td>
 
                                     </tr>
