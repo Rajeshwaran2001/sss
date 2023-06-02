@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import branch_user
-from utility.models import device_list
+from utility.models import device_list, branch
 
 
 # Create your models here.
@@ -22,6 +22,7 @@ class status_list(models.Model):
 
 class service(models.Model):
     user = models.ForeignKey(branch_user, on_delete=models.SET_NULL, blank=False, null=True)
+    branch = models.ForeignKey(branch, on_delete=models.SET_NULL, blank=False, null=True)
     issue = models.ForeignKey(issue_list, on_delete=models.SET_NULL, blank=False, null=True)
     pc = models.ForeignKey(device_list, on_delete=models.SET_NULL, blank=False, null=True)
     status = models.BooleanField(default=False)

@@ -152,74 +152,26 @@
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">ID</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">Ad Name</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Status</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Total Count</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Recorded Count</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Completion</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Ends By</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Day's Left</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">Branch</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">User</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Asset ID</th>
+                                    <th class="text-uppercase text-dark text-xs font-weight-bolder">Issue</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for a in ads %}
+                                {% for a in service %}
                                     <tr>
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-xs text-dark font-weight-bold">{{ forloop.counter }}</span>
                                         </td>
+
                                         <td class="align-middle text-center text-sm">
-                                            <a class="font-weight-bold" href="#"
-                                               onclick="showLoading(event, '{% url 'Dashboard:ad_detail' a.id %}')">
-                                                <span class="text-xs text-dark font-weight-bold"> {{ a.AdName }} </span>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            {% if a.status == 'up' %}
-                                                <div class="avatar-group mt-2">
-                                                    <img src="{% static 'img/arrow/green.png' %}"
-                                                         class="avatar avatar-xs rounded-circle" alt="up">
-                                                </div>
-                                            {% elif a.status == 'down' %}
-                                                <div class="avatar-group mt-2">
-                                                    <img src="{% static 'img/arrow/orange.png' %}"
-                                                         class="avatar avatar-xs rounded-circle" alt="down">
-                                                </div>
-                                            {% elif a.status == 'error' %}
-                                                <div class="avatar-group mt-2">
-                                                    <img src="{% static 'img/arrow/red.png' %}"
-                                                         class="avatar avatar-xs rounded-circle" alt="error">
-                                                </div>
-                                            {% elif a.status == 'crtical' %}
-                                                <div class="avatar-group mt-2">
-                                                    <img src="{% static 'img/arrow/red-circle.png' %}"
-                                                         class="avatar avatar-xs rounded-circle" alt="critical">
-                                                </div>
-                                            {% endif %}
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs text-dark font-weight-bold"> {{ a.TotalCount }} </span>
+                                            <span class="text-xs text-dark font-weight-bold"> {{ a.b }} </span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-xs text-dark font-weight-bold"> {{ a.myads_count }} </span>
                                         </td>
-                                        <td class="align-middle">
-                                            <div class="progress-wrapper w-75 mx-auto">
-                                                <div class="progress-info">
-                                                    <div class="progress-percentage">
-                                                        <span class="text-xs text-dark font-weight-bold"
-                                                              data-bs-toggle="tooltip"
-                                                              title="{{ a.percentage|floatformat }}%">{{ a.percentage|floatformat }}%</span>
-                                                    </div>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-gradient-info "
-                                                         style="width: {{ a.percentage|floatformat }}%;"
-                                                         role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                                         aria-valuemax="100" data-bs-toggle="tooltip"
-                                                         title="{{ a.percentage|floatformat }}%"></div>
-                                                </div>
-                                            </div>
-                                        </td>
+
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-xs text-dark font-weight-bold"> {{ a.EndDate }} </span>
                                         </td>
