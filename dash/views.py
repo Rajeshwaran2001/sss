@@ -14,9 +14,17 @@ from company.models import service
 
 @login_required()
 def home(request):
+    total_pc = device_list.objects.all().count()
+    total_printer = device_list.objects.all().filter(printer__isnull=False).count()
+    total_service = service.objects.all().filter(status=True).count()
+    pending_ser = service.objects.all().filter(status=False).count()
     ser = service.objects.all().filter(status=False)
     context = {
-        'service': ser
+        'service': ser,
+        'pc': total_pc,
+        'printer': total_printer,
+        'tservice': total_service,
+        'pservice': pending_ser
     }
     return render(request, 'index.html', context)
 
