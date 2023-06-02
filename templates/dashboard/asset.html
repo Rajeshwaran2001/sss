@@ -94,7 +94,6 @@
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">ID</th>
-                                    <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">User</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder ps-2">Asset Id</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">Sys name</th>
                                     <th class="text-uppercase text-dark text-xs font-weight-bolder">warranty</th>
@@ -111,10 +110,7 @@
                                             <span class="text-xs text-dark font-weight-bold">{{ forloop.counter }}</span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <span class="text-xs text-dark font-weight-bold"> {{ a.user }} </span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-xs text-dark font-weight-bold">{{ a.barcode_id }}</span>
+                                            <span class="text-xs text-dark font-weight-bold">{{ a.asset_id }}</span>
                                         </td>
 
                                         <td class="align-middle text-center text-sm">
@@ -201,10 +197,6 @@
                                     <div class="input-group input-group-outline mb-3">
                                         <label class="form-label">Branch</label>
                                         {% render_field form.branch class="form-control" %}
-                                    </div>
-                                    <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">User</label>
-                                        {% render_field form.user class="form-control" %}
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
                                         <label class="form-label">Sys Name</label>

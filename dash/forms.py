@@ -23,7 +23,7 @@ class AdminUserForm(forms.ModelForm):
 class asset_listForm(forms.ModelForm):
     class Meta:
         model = device_list
-        fields = ['branch', 'user', 'sys_name', 'warranty', 'system_purchased_from', 'bill_no', 'system_purchased_year',
+        fields = ['branch', 'sys_name', 'warranty', 'system_purchased_from', 'bill_no', 'system_purchased_year',
                   'manufacture', 'processor', 'ram', 'hard_disk_type', 'hard_disk_size', 'monitor', 'ip_address',
                   'printer', 'printer_purchased_from', 'printer_year']
         widgets = {
@@ -35,7 +35,7 @@ class asset_listForm(forms.ModelForm):
 class asset_editForm(forms.ModelForm):
     class Meta:
         model = device_list
-        fields = ['branch', 'user', 'sys_name', 'warranty', 'barcode_id', 'system_purchased_from', 'bill_no',
+        fields = ['branch', 'sys_name', 'warranty', 'barcode_id', 'system_purchased_from', 'bill_no',
                   'system_purchased_year',
                   'manufacture', 'processor', 'ram', 'hard_disk_type', 'hard_disk_size', 'monitor', 'ip_address',
                   'printer', 'printer_purchased_from', 'printer_year']

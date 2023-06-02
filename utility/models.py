@@ -3,9 +3,9 @@ import barcode
 from barcode.writer import ImageWriter
 from io import BytesIO
 from django.core.files import File
-import uuid
 import random
 import string
+from user.models import branch_user
 
 
 # Create your models here.
@@ -55,7 +55,6 @@ class device_list(models.Model):
     barcode_id = models.CharField(max_length=500, blank=True, null=True)
     warranty = models.ForeignKey(warranty, on_delete=models.SET_NULL, blank=False, null=True)
     branch = models.ForeignKey(branch, on_delete=models.SET_NULL, blank=False, null=True)
-    user = models.CharField(max_length=120, blank=True, null=True)
     sys_name = models.CharField(max_length=120, blank=True, null=True)
     system_purchased_from = models.CharField(max_length=120, blank=True, null=True)
     bill_no = models.CharField(max_length=100, blank=True, null=True)
@@ -72,7 +71,7 @@ class device_list(models.Model):
     printer_year = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return self.asset_id
 
     def save(self, *args, **kwargs):
         if not self.asset_id:
@@ -89,7 +88,7 @@ class device_list(models.Model):
         if self.branch and self.system_purchased_year and self.sys_name:
             barcode_data = f"{self.barcode_id}"
             EAN = barcode.get_barcode_class('code39')
-            ean = EAN(barcode_data, writer=ImageWriter(),add_checksum=False)
+            ean = EAN(barcode_data, writer=ImageWriter(), add_checksum=False)
             buffer = BytesIO()
             ean.write(buffer)
             barcode_filename = f'{self.barcode_id}.png'
