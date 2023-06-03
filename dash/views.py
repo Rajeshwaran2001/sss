@@ -11,6 +11,8 @@ from company.models import service
 
 
 # Create your views here.
+def is_office(user):
+    return user.groups.filter(name='Office').exists()
 
 @login_required()
 def home(request):
