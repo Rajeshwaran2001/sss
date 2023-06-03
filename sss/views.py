@@ -5,11 +5,12 @@ from django.shortcuts import render
 from dash.models import Admin
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-
+from .forms import ServiceBaseForm
 from sss.forms import ServiceBaseForm
 from utility.models import device_list, branch
 from sss.settings import LOGIN_REDIRECT_URL
 from company.models import service
+
 
 def logout_user(request):
     logout(request)
@@ -68,4 +69,15 @@ def customer_view(request):
             print('not fount')
             return redirect('customer')
 
-    return render(request,'customer/login.html', {'br': br})
+    return render(request, 'customer/login.html', {'br': br})
+
+
+def save(request):
+    if request.method == 'POST':
+        data = ServiceBaseForm(request.POST)
+        if data.is_valid():
+            data1 = data.save()
+            data1.save()
+            return JsonResponse({'success': True, 'message': 'Issue Raised successfully'})
+        else:
+            return JsonResponse({'Failed': True, 'message': 'Issue Not Raised'})
