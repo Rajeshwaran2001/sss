@@ -43,6 +43,25 @@
 
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+    <div class="row">
+            {% for i in ser %}
+                <div class="col-xl-2 col-sm-6 mb-xl-3 mb-4">
+                    <div class="card" style="background-color: #DFE0DF">
+                            <div class="card-header p-3 pt-2" style="background-color: #DFE0DF">
+                                <div class="pt-1 text-center" style="background-color: #DFE0DF">
+                                    <h4 class="text-xl mb-0 text-capitalize text-dark">{{ i.user }}</h4>
+                                    <h5 class="mb-0 text-dark">{{ i.branch }}</h5>
+
+                                    <h6 class="mb-0 text-dark"> {{ i.issue }}</h6>
+                                </div>
+                            </div>
+                            <hr class="horizontal my-0">
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     <a href="#" class="btn btn-info rounded-circle fixed-button" data-bs-toggle="modal" data-bs-target="#modal-form">
         <i class="material-icons opacity-10" style="font-size:35px;" >add</i>
     </a>
@@ -81,7 +100,13 @@
                         <div class="card-body">
                             <form role="form text-left" id="form" method="post" action="">
                                 {% csrf_token %}
-                                   {{ form.as_p }}
+                                <input type="hidden" name="user" value="{{ ad.sys_name }}" id="id_user" disabled>
+                                <input type="hidden" name="branch" value="{{ ad.branch }}" id="id_branch" disabled>
+                                <input type="hidden" name="pc" value="{{ ad.asset_id }}" id="id_pc">
+                                <div class="input-group input-group-static my-3">
+                                    <label >Issue:</label>
+                                    {% render_field form.issue class="form-control" name="Route" %}
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-round bg-gradient-info btn-lg w-100 mt-4 mb-0">
                                         Submit

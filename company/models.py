@@ -21,7 +21,7 @@ class status_list(models.Model):
 
 
 class service(models.Model):
-    user = models.ForeignKey(branch_user, on_delete=models.SET_NULL, blank=False, null=True)
+    user = models.CharField(max_length=50, null=True, blank=True)
     branch = models.ForeignKey(branch, on_delete=models.SET_NULL, blank=False, null=True)
     issue = models.ForeignKey(issue_list, on_delete=models.SET_NULL, blank=False, null=True)
     pc = models.ForeignKey(device_list, on_delete=models.SET_NULL, blank=False, null=True)
