@@ -49,6 +49,22 @@ class printer(models.Model):
         return self.name
 
 
+class ram(models.Model):
+    ram = models.CharField(max_length=120, null=True, blank=False)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.ram
+
+
+class hdd_size(models.Model):
+    hdd_size = models.CharField(max_length=120, null=True, blank=False)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.hdd_size
+
+
 class device_list(models.Model):
     asset_id = models.CharField(max_length=50, null=True, blank=True)
     barcode = models.ImageField(upload_to='barcodes/', null=True, blank=True)
@@ -61,9 +77,9 @@ class device_list(models.Model):
     system_purchased_year = models.DateField(null=True, blank=True)
     manufacture = models.ForeignKey(manufacture, on_delete=models.SET_NULL, blank=False, null=True)
     processor = models.CharField(max_length=120, blank=True, null=True)
-    ram = models.CharField(max_length=5, blank=True, null=True)
+    ram = models.ForeignKey(ram, on_delete=models.SET_NULL, blank=False, null=True)
     hard_disk_type = models.ForeignKey(hard_disk_type, on_delete=models.SET_NULL, blank=False, null=True)
-    hard_disk_size = models.CharField(max_length=120, blank=True, null=True)
+    hard_disk_size = models.ForeignKey(hdd_size, on_delete=models.SET_NULL, blank=False, null=True)
     monitor = models.CharField(max_length=120, blank=True, null=True)
     ip_address = models.GenericIPAddressField()
     printer = models.ForeignKey(printer, on_delete=models.SET_NULL, blank=True, null=True)
